@@ -1,13 +1,13 @@
 exports.create = async function (req) {
   const tenantId = req.body["tenant-id"];
-  const job = req.body.job;
+  const monitor = req.body.monitor;
 };
 
 exports.update = async function (req) {
-  const jobId = req.params.id;
-  const jobDiff = req.body.job;
+  const monitorId = req.params.id;
+  const monitorDiff = req.body.monitor;
 };
 
 exports.delete = async function (req) {
-  const jobId = req.params.id;
+  const monitorId = req.params.id;
 };

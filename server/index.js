@@ -1,20 +1,20 @@
 require("dotenv").config();
 
-const job = require("./routes/job");
+const monitor = require("./monitor");
 
 const fastify = require("fastify")({ logger: true });
 
 fastify.get("/", async () => "Do you know Gods of Death love apples?");
 
 fastify.post(
-  "/job",
+  "/monitor",
   {
     schema: {
       body: {
         type: "object",
         properties: {
           "tenant-id": { type: "string" },
-          job: {
+          monitor: {
             type: "object",
             properties: {
               url: { type: "string" },
@@ -23,21 +23,21 @@ fastify.post(
             required: ["url", "hour-zone"],
           },
         },
-        required: ["tenant-id", "job"],
+        required: ["tenant-id", "monitor"],
       },
     },
   },
-  job.create
+  monitor.create
 );
 
 fastify.put(
-  "/job/:id",
+  "/monitor/:id",
   {
     schema: {
       body: {
         type: "object",
         properties: {
-          job: {
+          monitor: {
             type: "object",
             properties: {
               url: { type: "string" },
@@ -45,14 +45,14 @@ fastify.put(
             },
           },
         },
-        required: ["job"],
+        required: ["monitor"],
       },
     },
   },
-  job.update
+  monitor.update
 );
 
-fastify.delete("/job/:id", {}, job.delete);
+fastify.delete("/monitor/:id", {}, monitor.delete);
 
 fastify.listen(process.env.PORT).catch((err) => {
   fastify.log.error(err);
