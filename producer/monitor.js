@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const monitors = new (require("bull"))("monitors");
+const monitors = new (require("bull"))("monitors", process.env.REDIS);
 
 exports.create = async function (req) {
   const tenantId = req.body["tenant-id"];
