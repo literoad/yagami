@@ -1,13 +1,13 @@
 const crypto = require("crypto");
 const monitors = new (require("bull"))("monitors", process.env.REDIS);
 
-exports.create = async function (req) {
+exports.create = async (req) => {
   const tenantId = req.body["tenant-id"];
   const monitor = req.body.monitor;
 
   const monitorId = `${tenantId}~${crypto.randomUUID()}`;
 
-  const job = await monitors.add(
+  await monitors.add(
     { ...monitor, id: monitorId },
     {
       jobId: monitorId,
@@ -20,10 +20,25 @@ exports.create = async function (req) {
 
   // TODO: Have a list of tenant's jobs?
 
-  return monitors.toKey(job);
+  return monitorId;
 };
 
-exports.delete = async function (req) {
-  const monitorKey = req.params.id;
-  await monitors.removeRepeatableByKey(monitorKey);
+exports.delete = async (req, res) => {
+  const monitorId = req.params.id;
+
+  // FIXME: This digs a bit too deep into the bull's internals.
+  // Better way would be to store the initial job configuration
+  // when adding it, so we could look up the cron corresponding
+  // to the job in our storage.
+  const monitorConfigs = await monitors.getRepeatableJobs();
+  const job = monitorConfigs.find((job) => job.id === monitorId);
+
+  if (job) {
+    await monitors.removeRepeatable({
+      jobId: job.id,
+      cron: job.cron,
+    });
+  }
+
+  res.code(204);
 };
