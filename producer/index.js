@@ -4,6 +4,8 @@ const monitor = require("./monitor");
 
 const fastify = require("fastify")({ logger: true });
 
+fastify.register(require("fastify-graceful-shutdown"));
+
 fastify.get("/", async () => "Do you know Gods of Death love apples?");
 
 fastify.post(
@@ -31,6 +33,12 @@ fastify.post(
 );
 
 fastify.delete("/monitor/:id", {}, monitor.delete);
+
+fastify.after(() => {
+  fastify.gracefulShutdown((signal, next) => {
+    next();
+  });
+});
 
 fastify.listen(process.env.PORT, "0.0.0.0").catch((err) => {
   fastify.log.error(err);
