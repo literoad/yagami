@@ -12,7 +12,7 @@ exports.create = async function (req) {
     {
       jobId: monitorId,
       repeat: {
-        cron: `0  ${monitor["hour-zone"]} * *`,
+        cron: `0  ${monitor["hour-zone"]} * * *`,
         tz: "Europe/Moscow",
       },
     }

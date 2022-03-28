@@ -32,7 +32,7 @@ fastify.post(
 
 fastify.delete("/monitor/:id", {}, monitor.delete);
 
-fastify.listen(process.env.PORT).catch((err) => {
+fastify.listen(process.env.PORT, "0.0.0.0").catch((err) => {
   fastify.log.error(err);
   process.exit(1);
 });
