@@ -3,10 +3,11 @@
   "private": true,
   "main": "index.js",
   "dependencies": {
+    "bull": "^4.8.1",
     "dotenv": "^16.0.0",
     "fastify": "^3.27.4"
   },
   "devDependencies": {
-    "prettier": "^2.6.0"
+    "prettier": "^2.6.1"
   }
 }
