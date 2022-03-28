@@ -30,28 +30,6 @@ fastify.post(
   monitor.create
 );
 
-fastify.put(
-  "/monitor/:id",
-  {
-    schema: {
-      body: {
-        type: "object",
-        properties: {
-          monitor: {
-            type: "object",
-            properties: {
-              url: { type: "string" },
-              "hour-zone": { type: "string" },
-            },
-          },
-        },
-        required: ["monitor"],
-      },
-    },
-  },
-  monitor.update
-);
-
 fastify.delete("/monitor/:id", {}, monitor.delete);
 
 fastify.listen(process.env.PORT).catch((err) => {
