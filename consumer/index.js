@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const path = require("path");
 
 const monitors = new (require("bull"))("monitors", process.env.REDIS);
