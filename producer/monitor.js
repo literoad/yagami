@@ -34,12 +34,7 @@ exports.delete = async (req, res) => {
   const job = monitorConfigs.find((job) => job.id === monitorId);
 
   if (job) {
-    console.log(job);
     await monitors.removeRepeatableByKey(job.key);
-    // await monitors.removeRepeatable({
-    //   jobId: job.id,
-    //   cron: job.cron,
-    // });
   }
 
   res.code(204);
