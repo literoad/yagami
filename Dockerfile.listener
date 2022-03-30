@@ -1,0 +1,16 @@
+# syntax=docker/dockerfile:1
+
+FROM node:lts-alpine
+
+ENV NODE_ENV=production
+ENV REDIS=redis://redis:6379
+ENV MONGO=mongodb://mongodb:27017
+ENV MONGO_DB_NAME=yagami
+ENV MONGO_COLLECTION_NAME=measurements
+
+COPY ["package.json", "package-lock.json", "./"]
+RUN npm ci
+
+COPY listener listener/
+
+CMD ["node", "listener/index.js"]
