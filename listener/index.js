@@ -1,15 +1,12 @@
 require("dotenv").config();
 
-const monitors = new (require("bull"))("monitors", process.env.REDIS);
-const collection = await require("./init-db")();
+const getCollection = require("./get-collection");
 
-monitors.on("completed", async (job, result) => {
-  const resultWithMeta = {
-    ...result,
-    metadata: {
-      id: job.id,
-      tenant: job.id.split("~")[0],
-    },
-  };
-  await collection.insertOne(resultWithMeta);
+const monitors = new (require("bull"))("monitors", process.env.REDIS);
+
+monitors.on("global:completed", async (jobKey, result) => {
+  console.log(result);
+
+  const collection = await getCollection();
+  await collection.insertOne(JSON.parse(result));
 });

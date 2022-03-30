@@ -19,6 +19,15 @@ services:
     depends_on:
       - producer
 
+  listener:
+    build:
+      context: .
+      dockerfile: Dockerfile.listener
+    env_file: ./.env
+    depends_on:
+      - consumer
+      - mongodb
+
   dashboard:
     build:
       context: .
@@ -35,5 +44,13 @@ services:
     volumes:
       - redis-data:/data
 
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+
 volumes:
   redis-data:
+  mongodb-data:

@@ -15,6 +15,7 @@ exports.create = async (req) => {
         cron: `0  ${monitor["hour-zone"]} * * *`,
         tz: "Europe/Moscow",
       },
+      removeOnComplete: true,
     }
   );
 
