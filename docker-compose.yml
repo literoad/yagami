@@ -11,6 +11,14 @@ services:
     depends_on:
       - redis
 
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile.consumer
+    env_file: ./.env
+    depends_on:
+      - producer
+
   dashboard:
     build:
       context: .

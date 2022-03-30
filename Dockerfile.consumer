@@ -1,0 +1,13 @@
+# syntax=docker/dockerfile:1
+
+FROM node:lts-alpine
+
+ENV NODE_ENV=production
+ENV REDIS=redis://redis:6379
+
+COPY ["package.json", "package-lock.json", "./"]
+RUN npm ci
+
+COPY consumer consumer/
+
+CMD ["node", "consumer/index.js"]
