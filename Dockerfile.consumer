@@ -4,6 +4,7 @@ FROM node:lts-alpine
 
 ENV NODE_ENV=production
 ENV REDIS=redis://redis:6379
+ENV RYUK_URL=http://ryuk
 
 COPY ["package.json", "package-lock.json", "./"]
 RUN npm ci
