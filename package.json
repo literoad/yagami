@@ -3,6 +3,8 @@
   "private": true,
   "main": "index.js",
   "dependencies": {
+    "@bull-board/api": "^3.10.2",
+    "@bull-board/fastify": "^3.10.2",
     "bull": "^4.8.1",
     "dotenv": "^16.0.0",
     "fastify": "^3.27.4",
