@@ -13,30 +13,18 @@ module.exports = async function (job) {
     }),
   });
 
-  // FIXME Detect when the lighthouse run failed and configure
-  // job retry. Better yet, fix this in ryuk by returning the 500 status
-
-  const {
-    requestedUrl,
-    finalUrl,
-    fetchTime,
-    lighthouseVersions,
-    categories,
-    userAgent,
-    timing,
-  } = await reportResult.json();
+  const report = await reportResult.json();
 
   return {
-    requestedUrl,
-    finalUrl,
-    fetchTime: Date.parse(fetchTime),
-    lighthouseVersions,
-    categories,
-    userAgent,
-    timing,
+    requestedUrl: report.requestedUrl,
+    finalUrl: report.finalUrl,
+    fetchTime: report.fetchTime,
+    lighthouseVersions: report.lighthouseVersions,
+    categories: report.categories,
+    userAgent: report.userAgent,
     metadata: {
-      "tenant-id": job.id.split("~")[0],
-      id: job.id,
+      "tenant-id": job.data.tenant,
+      id: job.data.id,
     },
   };
 };

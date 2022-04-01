@@ -8,7 +8,11 @@ exports.create = async (req) => {
   const monitorId = `${tenantId}~${crypto.randomUUID()}`;
 
   await monitors.add(
-    { ...monitor, id: monitorId },
+    {
+      ...monitor,
+      tenant: tenantId,
+      id: monitorId,
+    },
     {
       jobId: monitorId,
       repeat: {
