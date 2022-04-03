@@ -10,11 +10,11 @@ module.exports = async function () {
   const client = new MongoClient(process.env.MONGO);
   await client.connect();
 
-  const db = client.db(process.env.MONGO_DB_NAME);
+  const db = client.db("yagami");
   console.log("created db");
 
   try {
-    await db.createCollection(process.env.MONGO_COLLECTION_NAME, {
+    await db.createCollection("measurements", {
       timeseries: {
         timeField: "fetchTime",
         metaField: "metadata",
@@ -26,7 +26,7 @@ module.exports = async function () {
     console.log("collection already exists");
   }
 
-  collection = db.collection(process.env.MONGO_COLLECTION_NAME);
+  collection = db.collection("measurements");
 
   return collection;
 };
