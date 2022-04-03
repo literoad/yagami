@@ -53,7 +53,7 @@ exports.range = async function (req) {
   const to = req.body.to ? moment(req.body.to) : moment();
   const from = req.body.from
     ? moment(req.body.from)
-    : moment(to).subtract(7, "days").startOf("day");
+    : moment(to).subtract(1, "year").startOf("day");
 
   const client = await clientPromise;
   const result = await client
