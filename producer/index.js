@@ -52,6 +52,24 @@ fastify.post(
   aggregator.latest
 );
 
+fastify.post(
+  "/aggregator/range",
+  {
+    schema: {
+      body: {
+        type: "object",
+        properties: {
+          id: { type: "string" },
+          from: { type: "string" },
+          to: { type: "string" },
+        },
+        required: ["id"],
+      },
+    },
+  },
+  aggregator.range
+);
+
 fastify.after(() => {
   fastify.gracefulShutdown((signal, next) => {
     next();
