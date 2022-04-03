@@ -9,7 +9,7 @@ fastify.register(require("fastify-graceful-shutdown"));
 fastify.get("/", async () => "Do you know Gods of Death love apples?");
 
 fastify.post(
-  "/monitor",
+  "/monitors",
   {
     schema: {
       body: {
@@ -32,7 +32,7 @@ fastify.post(
   monitor.create
 );
 
-fastify.delete("/monitor/:id", {}, monitor.delete);
+fastify.delete("/monitors/:id", {}, monitor.delete);
 
 fastify.after(() => {
   fastify.gracefulShutdown((signal, next) => {
