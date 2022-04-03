@@ -1,12 +1,10 @@
 require("dotenv").config();
 
-const monitor = require("./monitor");
+const monitors = require("./monitors");
 
 const fastify = require("fastify")({ logger: true });
 
 fastify.register(require("fastify-graceful-shutdown"));
-
-fastify.get("/", async () => "Do you know Gods of Death love apples?");
 
 fastify.post(
   "/monitors",
@@ -29,10 +27,10 @@ fastify.post(
       },
     },
   },
-  monitor.create
+  monitors.create
 );
 
-fastify.delete("/monitors/:id", {}, monitor.delete);
+fastify.delete("/monitors/:id", {}, monitors.delete);
 
 fastify.after(() => {
   fastify.gracefulShutdown((signal, next) => {
