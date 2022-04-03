@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const monitors = require("./monitors");
+const aggregator = require("./aggregator");
 
 const fastify = require("fastify")({ logger: true });
 
@@ -31,6 +32,25 @@ fastify.post(
 );
 
 fastify.delete("/monitors/:id", {}, monitors.delete);
+
+fastify.post(
+  "/aggregator/latest",
+  {
+    schema: {
+      body: {
+        type: "object",
+        properties: {
+          ids: {
+            type: "array",
+            items: { type: "string" },
+          },
+        },
+        required: ["ids"],
+      },
+    },
+  },
+  aggregator.latest
+);
 
 fastify.after(() => {
   fastify.gracefulShutdown((signal, next) => {

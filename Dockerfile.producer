@@ -4,6 +4,7 @@ FROM node:lts-alpine
 
 ENV NODE_ENV=production
 ENV REDIS=redis://redis:6379
+ENV MONGO=mongodb://mongodb:27017
 ENV PORT=3000
 EXPOSE 3000
 
