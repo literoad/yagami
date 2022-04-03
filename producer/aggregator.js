@@ -32,7 +32,7 @@ exports.latest = async function (req) {
         $project: {
           timestamp: 1,
           "lastResult.performance": "$measurement.performance.score",
-          "lastResult.bestPractices": "$measurement['best-practices'].score",
+          "lastResult.bestPractices": `$measurement.best\-practices.score`,
           "lastResult.seo": "$measurement.seo.score",
         },
       },
