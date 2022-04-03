@@ -11,7 +11,6 @@ module.exports = async function () {
   await client.connect();
 
   const db = client.db("yagami");
-  console.log("created db");
 
   try {
     await db.createCollection("measurements", {
@@ -20,8 +19,12 @@ module.exports = async function () {
         metaField: "metadata",
         granularity: "hours",
       },
+      expireAfterSeconds: 31536000,
     });
-    console.log("created collection");
+    await db.collection("measurements").createIndex({
+      "metadata.id": 1,
+      fetchTime: 1,
+    });
   } catch (e) {
     console.log("collection already exists");
   }
