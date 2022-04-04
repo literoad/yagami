@@ -1,0 +1,23 @@
+version: "3.9"
+
+x-common-variables: &common-variables
+  PORT: "3000"
+  REDIS: "redis://redis:6379"
+  MONGO: "mongodb://mongodb:27017"
+  RYUK_URL: "https://ryuk"
+  SHINGO_URL: "http://host.docker.internal:5234"
+
+services:
+  producer:
+    image: cr.yandex/crprasudad2h8egspgoc/yagami-producer:latest
+    environment: *common-variables
+    ports:
+      - "3000:3000"
+
+  consumer:
+    image: cr.yandex/crprasudad2h8egspgoc/yagami-consumer:latest
+    environment: *common-variables
+
+  listener:
+    image: cr.yandex/crprasudad2h8egspgoc/yagami-listener:latest
+    environment: *common-variables
