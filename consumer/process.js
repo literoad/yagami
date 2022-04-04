@@ -3,6 +3,23 @@ require("dotenv").config();
 const fetch = require("node-fetch");
 
 module.exports = async function (job) {
+  // Check if the users's subscription is active
+  const userRq = await fetch(
+    `${process.env.SHINGO_URL}/users/${job.data.tenant}`,
+    {
+      method: "GET",
+    }
+  );
+  const user = await userRq.json();
+
+  // If subscription lapsed, discard the job. It will still have its
+  // repeatable variant in queue though, in case tenant reactivates
+  if (!user?.active) {
+    await job.discard();
+    return;
+  }
+
+  // Request lighthouse audit
   const reportResult = await fetch(process.env.RYUK_URL, {
     method: "POST",
     headers: {
