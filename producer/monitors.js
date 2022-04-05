@@ -1,5 +1,11 @@
 const crypto = require("crypto");
-const monitors = new (require("bull"))("monitors", process.env.REDIS);
+const monitors = new (require("bull"))("monitors", {
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASSWORD,
+  },
+});
 
 exports.create = async (req) => {
   const tenantId = req.body["tenant-id"];

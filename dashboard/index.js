@@ -1,7 +1,13 @@
 require("dotenv").config();
 
 const fastify = require("fastify")({ logger: true });
-const monitors = new (require("bull"))("monitors", process.env.REDIS);
+const monitors = new (require("bull"))("monitors", {
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASSWORD,
+  },
+});
 
 const { createBullBoard } = require("@bull-board/api");
 const { BullAdapter } = require("@bull-board/api/bullAdapter");
