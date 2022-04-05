@@ -8,6 +8,9 @@ module.exports = async function (job) {
     `${process.env.SHINGO_URL}/users/${job.data.tenant}`,
     {
       method: "GET",
+      header: {
+        Authorization: `Api-Key ${process.env.SERVICE_KEY}`,
+      },
     }
   );
   const user = await userRq.json();
@@ -23,6 +26,7 @@ module.exports = async function (job) {
   const reportResult = await fetch(process.env.RYUK_URL, {
     method: "POST",
     headers: {
+      Authorization: `Api-Key ${process.env.SERVICE_KEY}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
